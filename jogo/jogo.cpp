@@ -1,4 +1,4 @@
-//Gabrielly Prado - Hélio Júnior
+//Gabrielly Prado - HÃ©lio JÃºnior
 
 #include <iostream>
 #include <cstdlib>
@@ -13,12 +13,12 @@ int main()
 
     setlocale(LC_ALL,"") ;
 
-    srand(time(NULL));// Evita que o número sorteado seja sempre o mesmo a cada execução
+    srand(time(NULL));// Evita que o nÃºmero sorteado seja sempre o mesmo a cada execuÃ§Ã£o
 
     //sorteado = rand() % 30 + 1;// Gera um n mero aleat rio entre 1 e 30
 
     cout<<"\t\t+************************************************************+\n";
-    cout<<"\t\tO JOGO: você é capaz de advinhar o número em até 5 tentativas?\n";
+    cout<<"\t\tO JOGO: vocÃª Ã© capaz de advinhar o nÃºmero em atÃ© 5 tentativas?\n";
     cout<<"\t\t+************************************************************+\n";
 
     cin.get();
@@ -36,31 +36,31 @@ int main()
 
 
             cout<< "\tTentativa " << tentativas + 1<<" de 5";
-            cout<<"\t\nDigite um número de 1 a 45: ";
+            cout<<"\t\nDigite um nÃºmero de 1 a 45: ";
             cin>>escolhido;
 
-            tentativas++; //contador para saber em qual tentativa o jogador se encontra caso n o acerte o número
+            tentativas++; //contador para saber em qual tentativa o jogador se encontra caso n o acerte o nÃºmero
 
             if(sorteado > escolhido)
             {
-                cout<<"\tPensei em um número MAIOR... "<<endl;
+                cout<<"\tPensei em um nÃºmero MAIOR... "<<endl;
             }
             else if(sorteado < escolhido)
             {
-                cout<<"\tPensei em um número MENOR... "<<endl;
+                cout<<"\tPensei em um nÃºmero MENOR... "<<endl;
             }
             /*else if (sorteado != escolhido)
             {
-                cout << "\t\nPoxa... você  usou todas as tentativas :(" << endl;
-                cout << "\t\tO número sorteado era: " << sorteado << endl;
+                cout << "\t\nPoxa... vocÃª  usou todas as tentativas :(" << endl;
+                cout << "\t\tO nÃºmero sorteado era: " << sorteado << endl;
 
 
 
             }*/
             else
             {
-                cout<<"\t\tPARABÉNS!!!! VOCÊ É MUITO INTELIGENTE :)"<<endl;
-                cout<<"O número sorteado foi: "<<sorteado<<endl;
+                cout<<"\t\tPARABÃ‰NS!!!! VOCÃŠ Ã‰ MUITO INTELIGENTE :)"<<endl;
+                cout<<"O nÃºmero sorteado foi: "<<sorteado<<endl;
                 break;
             }
 
@@ -70,8 +70,8 @@ int main()
 
         if (escolhido != sorteado)
         {
-            cout << "\t\nPoxa... você usou todas as tentativas :(" << endl;
-            cout << "\t\tO número sorteado era: " << sorteado << endl;
+            cout << "\t\nPoxa... vocÃª usou todas as tentativas :(" << endl;
+            cout << "\t\tO nÃºmero sorteado era: " << sorteado << endl;
         }
 
         cout<<"\nDeseja jogar de novo? (S/N)";
@@ -91,7 +91,7 @@ int main()
         else if (novoJogo == 'n' || novoJogo == 'N')
         {
             system("cls");
-            cout << "Poxaa... Obrigada por jogar!!! Volte mais tarde: )" << endl;
+            cout << "Poxaa... Obrigada por jogar!!! Volte mais tarde :)" << endl;
 
             break;
 
