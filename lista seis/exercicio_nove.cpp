@@ -3,24 +3,31 @@ using namespace std;
 
 int main()
 {
-    int num = 0, maior = 0, menor = 0;
+    int num = 0, maior = 0, menor = 0, parar = -1;
 
-    while(num != -1)
+    cout << "Digite um numero: ";
+    cin >> num;
+    maior = num;
+    menor = num;
+
+    while(num != parar)
     {
-        cout<<"Digite um numero: ";
-        cin>>num;
-        if(num > maior)
+        if(num != parar) 
         {
-            maior = num;
+            if(num > maior)
+            {
+                maior = num;
+            }
+            else if(num < menor)
+            {
+                menor = num;
+            }
         }
-        else if(num < menor)
-        {
-            menor = num;
-        }
+        cout << "Digite um numero: ";
+        cin >> num;
     }
-    num++;
 
-    cout<<"\n\n\tMaior numero: "<<maior<<endl;
-    cout<<"\n\n\tMenor numero: "<<menor<<endl;
+    cout << "\tMaior numero: " << maior << endl;
+    cout << "\tMenor numero: " << menor << endl;-
 
 }
