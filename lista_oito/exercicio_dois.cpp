@@ -3,31 +3,25 @@ using namespace std;
 
 void exibirMensagemInicial()
 {
-    cout<<"\t-------------------------------"<<endl;
-    cout<<"\tBem-Vindo ao Sistema De Medidas"<<endl;
-    cout<<"\t-------------------------------"<<endl;
+    cout<<"\t+-------------------------------+"<<endl;
+    cout<<"\t Bem-Vindo ao Sistema de Medidas "<<endl;
+    cout<<"\t+-------------------------------+"<<endl;
 }
 
-int calcularTransformacao(int metro)
+double calcular(double metros)
 {
-    return metro*100;
-}
-
-void exibirMensagemDoCalculo(int centimetro)
-{
-    cout<<"\t\tValor em centimetros: "<<centimetro<<endl;
+    return metros * 100;
 }
 
 int main()
 {
-    int metro = 0, centimetro = 0;
-
+    double metros, centimetros;
     exibirMensagemInicial();
 
-    cout<<"\t\tValor em metros: ";
-    cin>>metro;
+    cout<<"Digite o valor em metros: ";
+    cin>>metros;
 
-    centimetro = calcularTransformacao(metro);
-    exibirMensagemDoCalculo(centimetro);
+    centimetros = calcular(metros);
 
+    cout<<"Valor em centimetros: " << centimetros << endl;
 }
