@@ -5,29 +5,104 @@ using namespace std;
 
 void menuPrincipal()
 {
-    cout<<"\t+----------------------------------+"<<endl;
-    cout<<"\t+ Bem-Vindo ao Sistema Naughty Dog +"<<endl;
-    cout<<"\t+----------------------------------+"<<endl;
+    int organizar = 0;
 
-    //colocar um siwcht e escolha: 1 realizar operaÁ„o e 2 sair do sitmea
+    cout<<"\t+-----------------------------------------+"<<endl;
+    cout<<"\t+ Vamos organizar o materiais do projeto? +"<<endl;
+    cout<<"\t+-----------------------------------------+"<<endl;
+    cout << "\t1 - Cadastrar materiais do projeto" << endl;
+    cout << "\t2 - Sair" << endl;
+    cout << "\tEscolha: ";
+    cin>>organizar;
+
+    switch(organizar)
+    {
+        case 1:
+            organizando();
+        case 2:
+        {
+            cout << "\nAT√â A PR√ìXIMA... :)" << endl;
+            break;
+        }
+        default:
+            cout << "Op√ß√£o inv√°lida!" << endl;
+    }
+
+
 }
 
-void avisoBloqueio()
+string avisoBloqueio()
 {
     cout<<"\t+***************************+"<<endl;
     cout<<"\t+ AVISO: sistema bloqueado, +"<<endl;
     cout<<"\t+     chame seu Gerente     +"<<endl;
     cout<<"\t+***************************+"<<endl;
+
+    string gerente, senhaGerente, entrar();
+    int desbloqueio = 0;
+
+    while (desbloqueio < 1)
+    {
+        cout << "\tGERENTE: ";
+        cin >> gerente;
+        cout << "\tSENHA: ";
+        cin >> senhaGerente;
+
+        if (gerente == "gerente" && senhaGerente == "ger3nt3")
+        {
+            cout << "\n\n";
+            entrar();
+            break;
+        }
+        else
+        {
+            desbloqueio++;
+            if (desbloqueio == 1)
+            {
+                cout << "\n\tSISTEMA BLOQUEADO!!!";
+            }
+        }
+    }
+
 }
 
 string novoUsuario()
 {
+    string nome, usuario;
+    const int qtdNumeros = 4;
+    string numeros = "0123456789";
 
+    cout << "Digite o nome para o novo usuario: ";
+    cin >> nome;
+
+    usuario = nome;
+
+    srand(time(0)); // inicializa o gerador aleat√≥rio
+
+    for(int i = 0; i < qtdNumeros; i++)
+    {
+        usuario += numeros[rand() % numeros.size()];
+    }
+
+    cout << "\nNovo usuario gerado: " << usuario << endl;
+    return usuario;
 }
 
 string novaSenha()
 {
+    string senha;
+    const int tamanhoSenha = 6;
+    string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+    srand(time(0)); // inicializa o gerador aleat√≥rio
+
+    for(int i = 0; i < tamanhoSenha; i++)
+    {
+        senha += caracteres[rand() % caracteres.size()];
+    }
+
+    cout << "Nova senha gerada: " << senha << endl;
+    return senha;
 }
 
 string entrar()
@@ -37,7 +112,7 @@ string entrar()
 
     while (tentativas < 3)
     {
-        cout << "\tUSU¡RIO: ";
+        cout << "\tUSU√ÅRIO: ";
         cin >> usuarioPrincipal;
         cout << "\tSENHA: ";
         cin >> senhaPrincipal;
@@ -58,29 +133,72 @@ string entrar()
             }
             else
             {
-                cout << "\n\tUSU¡RIO OU SENHA INV¡LIDOS!!! VocÍ sÛ tem mais " << (3 - tentativas) << "\n\n";
+                cout << "\n\tUSU√ÅRIO OU SENHA INV√ÅLIDOS!!! Voc√™ s√≥ tem mais " << (3 - tentativas) << "\n\n";
             }
         }
     }
 }
 
+void organizando()
+{
+    int i, quantidade = 0, materiais = 0;
+    string nome, material;
+
+    cout<<"\t\nNome do projeto: ";
+    cin>>nome;
+    cout<<"\t\nQuantos materiais ser√£o usados? ";
+    cin>>materiais;
+
+    for(i=0;i<materiais;i++)
+    {
+        cout<<"Material: ";
+        cin>>material[i];
+        cout<<"Quantidade: ";
+        cin>>quantidade[i];
+    }
+
+    cout<<"\t+******************************+"<<endl;
+    cout<<"\t+ LISTA COMPLETA DOS MATERIAIS +"<<endl;
+    cout<<"\t+******************************+"<<endl;
+
+    cout<<nome<<endl;
+
+
+}
+
 int main()
 {
-    int i = 0;
-    string usuarioPrincipal = {"admin"}, senhaPrincipal = {"ad125"}, usuarioNovo [5], senhaNova [5];
+    int i = 0, escolha = 0;
+    string usuarioPrincipal = {"admin"}, senhaPrincipal = {"ad125"}, gerente = {"gerente"}, senhaGerente = {"ger3nt3"}, usuario, senha, usuarioNovo [5], senhaNova [5];
 
     setlocale(LC_ALL,"") ;
 
     cin.get();
 
-    //fazer um menu de escolha onde: 1 È para o admin ja existente e o 2 È para criar um novo admin
-
     cout<<"\t+--------------------+"<<endl;
-    cout<<"\t+ ESCOLHA SEU USU¡RIO +"<<endl;
-    cout<<"\t+--------------------+"<<endl;
+    cout<<"\t+ ESCOLHA SEU USU√ÅRIO +"<<endl;
+    cout<<"\t+--------------------+"<<endl<<endl;
+    cout << "\t1 - Login como admin padrao" << endl;
+    cout << "\t2 - Criar novo usuario e senha" << endl;
+    cout << "\tEscolha: ";
+    cin >> escolha;
 
 
-
-    string resultado = entrar();
-
+    switch(escolha)
+    {
+        case 1:
+            entrar();
+            break;
+        case 2:
+        {
+            usuario = novoUsuario();
+            senha = novaSenha();
+            cout << "\nNovo usu√°rio e senha criados com sucesso!" << endl;
+            cout << "USU√ÅRIO: " << usuario << endl;
+            cout << "SENHA: " << senha << endl;
+            break;
+        }
+        default:
+            cout << "Op√ß√£o inv√°lida!" << endl;
+    }
 }
