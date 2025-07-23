@@ -3,6 +3,19 @@
 #include <ctime>
 using namespace std;
 
+void organizando();
+void menuPrincipal();
+void avisoBloqueio();
+string novoUsuario();
+string novaSenha();
+void entrar();
+
+struct Usuario
+{
+    string nome;
+    string senha;
+};
+
 void menuPrincipal()
 {
     int organizar = 0;
@@ -19,9 +32,10 @@ void menuPrincipal()
     {
         case 1:
             organizando();
+            break;
         case 2:
         {
-            cout << "\nATÉ A PRÓXIMA... :)" << endl;
+            entrar();
             break;
         }
         default:
@@ -31,14 +45,14 @@ void menuPrincipal()
 
 }
 
-string avisoBloqueio()
+void avisoBloqueio()
 {
     cout<<"\t+***************************+"<<endl;
     cout<<"\t+ AVISO: sistema bloqueado, +"<<endl;
     cout<<"\t+     chame seu Gerente     +"<<endl;
     cout<<"\t+***************************+"<<endl;
 
-    string gerente, senhaGerente, entrar();
+    string gerente, senhaGerente;
     int desbloqueio = 0;
 
     while (desbloqueio < 1)
@@ -66,31 +80,38 @@ string avisoBloqueio()
 
 }
 
-string novoUsuario()
+Usuario novoUsuario()
 {
-    string nome, usuario;
+    Usuario usuario;
+    string nome;
+    string senhaNova;
     const int qtdNumeros = 4;
+    const int tamanhoSenha = 6;
     string numeros = "0123456789";
+    string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     cout << "Digite o nome para o novo usuario: ";
-    cin >> nome;
-
-    usuario = nome;
+    cin >> usuario.nome;
 
     srand(time(0)); // inicializa o gerador aleatório
 
     for(int i = 0; i < qtdNumeros; i++)
     {
-        usuario += numeros[rand() % numeros.size()];
+        usuarioNovo += numeros[rand() % numeros.size()];
+    }
+    for(int i = 0; i < tamanhoSenha; i++)
+    {
+        senhaNova += caracteres[rand() % caracteres.size()];
     }
 
-    cout << "\nNovo usuario gerado: " << usuario << endl;
+    cout << "\nNovo usuario gerado: " << usuario.nome << endl;
+    cout << "Nova senha gerada: " << senha.nome << endl;
     return usuario;
 }
 
-string novaSenha()
+/*string novaSenha()
 {
-    string senha;
+    string senhaNova;
     const int tamanhoSenha = 6;
     string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -98,26 +119,34 @@ string novaSenha()
 
     for(int i = 0; i < tamanhoSenha; i++)
     {
-        senha += caracteres[rand() % caracteres.size()];
+        senhaNova += caracteres[rand() % caracteres.size()];
     }
 
-    cout << "Nova senha gerada: " << senha << endl;
-    return senha;
-}
+    cout << "Nova senha gerada: " << senhaNova << endl;
+    return senhaNova;
+}*/
 
-string entrar()
+void entrar(const Usuario& admin, const Usuario& novo)
 {
     string usuarioPrincipal, senhaPrincipal;
     int tentativas = 0;
 
     while (tentativas < 3)
     {
+        cout<<endl;
+        cout<<endl;
         cout << "\tUSUÁRIO: ";
         cin >> usuarioPrincipal;
         cout << "\tSENHA: ";
         cin >> senhaPrincipal;
 
-        if (usuarioPrincipal == "admin" && senhaPrincipal == "ad125")
+        if (usuarioPrincipal == "admin" && senhaPrincipal == "ad125" )
+        {
+            cout << "\n\n";
+            menuPrincipal();
+            break;
+        }
+        else if(usuarioPrincipal == novo.nome && senhaPrincipal == novo.senha)
         {
             cout << "\n\n";
             menuPrincipal();
@@ -141,8 +170,10 @@ string entrar()
 
 void organizando()
 {
-    int i, quantidade = 0, materiais = 0;
-    string nome, material;
+    int i, materiais = 0, opcao = 0;
+    string nome;
+    int quantidade[1000];
+    string material[1000];
 
     cout<<"\t\nNome do projeto: ";
     cin>>nome;
@@ -151,7 +182,7 @@ void organizando()
 
     for(i=0;i<materiais;i++)
     {
-        cout<<"Material: ";
+        cout<<"Material "<<i+1<<": ";
         cin>>material[i];
         cout<<"Quantidade: ";
         cin>>quantidade[i];
@@ -163,21 +194,43 @@ void organizando()
 
     cout<<nome<<endl;
 
+    for(i = 0; i < materiais; i++)
+    {
+        cout << "- " << material[i] << ": " << quantidade[i] << endl;
+    }
+    cout << "\t\nPrecisa cadastrar mais algum projeto?" << endl;
+    cout <<"\t1 - Sim"<<endl;
+    cout<<"\t2 - Voltar ao menu"<<endl;
+    cout<<"\t\nDigite sua escolha: ";
+    cin >> opcao;
+
+    if(opcao == 1)
+    {
+        organizando();
+    }
+    else
+    {
+        menuPrincipal();
+    }
 
 }
 
 int main()
 {
-    int i = 0, escolha = 0;
-    string usuarioPrincipal = {"admin"}, senhaPrincipal = {"ad125"}, gerente = {"gerente"}, senhaGerente = {"ger3nt3"}, usuario, senha, usuarioNovo [5], senhaNova [5];
+    Usuario admin;
+    string usuarioPrincipal = {"admin"};
+    string senhaPrincipal = {"ad125"};
 
-    setlocale(LC_ALL,"") ;
+    string gerente = {"gerente"}, senhaGerente = {"ger3nt3"};
+    int escolha = 0;
+
+    setlocale(LC_ALL,"");
 
     cin.get();
 
-    cout<<"\t+--------------------+"<<endl;
+    cout<<"\t+---------------------+"<<endl;
     cout<<"\t+ ESCOLHA SEU USUÁRIO +"<<endl;
-    cout<<"\t+--------------------+"<<endl<<endl;
+    cout<<"\t+---------------------+"<<endl<<endl;
     cout << "\t1 - Login como admin padrao" << endl;
     cout << "\t2 - Criar novo usuario e senha" << endl;
     cout << "\tEscolha: ";
@@ -187,15 +240,14 @@ int main()
     switch(escolha)
     {
         case 1:
-            entrar();
+            entrar(admin, vazio);
             break;
         case 2:
         {
-            usuario = novoUsuario();
-            senha = novaSenha();
-            cout << "\nNovo usuário e senha criados com sucesso!" << endl;
-            cout << "USUÁRIO: " << usuario << endl;
-            cout << "SENHA: " << senha << endl;
+            usuarioNovo = novoUsuario();
+            senhaNova = novaSenha();
+            cout << "\n\nNovo usuário e senha criados com sucesso!" << endl;
+            entrar(admin, novo);
             break;
         }
         default:
