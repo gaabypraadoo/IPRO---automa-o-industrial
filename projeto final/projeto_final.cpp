@@ -3,12 +3,12 @@
 #include <ctime>
 using namespace std;
 
-void organizando();
-void menuPrincipal();
-void avisoBloqueio();
-string novoUsuario();
-string novaSenha();
-void entrar();
+struct Usuario;
+void organizando(const Usuario& admin, const Usuario& novo);
+void menuPrincipal(const Usuario& admin, const Usuario& novo);
+void avisoBloqueio(const Usuario& admin, const Usuario& novo);
+Usuario usuarioNovo();
+void entrar(const Usuario& admin, const Usuario& novo);
 
 struct Usuario
 {
@@ -16,7 +16,7 @@ struct Usuario
     string senha;
 };
 
-void menuPrincipal()
+void menuPrincipal(const Usuario& admin, const Usuario& novo)
 {
     int organizar = 0;
 
@@ -31,11 +31,11 @@ void menuPrincipal()
     switch(organizar)
     {
         case 1:
-            organizando();
+            organizando(admin, novo);
             break;
         case 2:
         {
-            entrar();
+            entrar(admin, novo);
             break;
         }
         default:
@@ -45,7 +45,7 @@ void menuPrincipal()
 
 }
 
-void avisoBloqueio()
+void avisoBloqueio(const Usuario& admin, const Usuario& novo)
 {
     cout<<"\t+***************************+"<<endl;
     cout<<"\t+ AVISO: sistema bloqueado, +"<<endl;
@@ -65,7 +65,7 @@ void avisoBloqueio()
         if (gerente == "gerente" && senhaGerente == "ger3nt3")
         {
             cout << "\n\n";
-            entrar();
+            entrar(admin, novo);
             break;
         }
         else
@@ -80,7 +80,7 @@ void avisoBloqueio()
 
 }
 
-Usuario novoUsuario()
+Usuario usuarioNovo()
 {
     Usuario usuario;
     string nome;
@@ -97,15 +97,15 @@ Usuario novoUsuario()
 
     for(int i = 0; i < qtdNumeros; i++)
     {
-        usuarioNovo += numeros[rand() % numeros.size()];
+        usuario.nome += numeros[rand() % numeros.size()];
     }
     for(int i = 0; i < tamanhoSenha; i++)
     {
-        senhaNova += caracteres[rand() % caracteres.size()];
+        usuario.senha += caracteres[rand() % caracteres.size()];
     }
 
     cout << "\nNovo usuario gerado: " << usuario.nome << endl;
-    cout << "Nova senha gerada: " << senha.nome << endl;
+    cout << "Nova senha gerada: " << usuario.senha << endl;
     return usuario;
 }
 
@@ -135,6 +135,9 @@ void entrar(const Usuario& admin, const Usuario& novo)
     {
         cout<<endl;
         cout<<endl;
+        cout<<"\t+-------+"<<endl;
+        cout<<"\t+ LOGIN +"<<endl;
+        cout<<"\t+-------+"<<endl;
         cout << "\tUSUÁRIO: ";
         cin >> usuarioPrincipal;
         cout << "\tSENHA: ";
@@ -143,13 +146,13 @@ void entrar(const Usuario& admin, const Usuario& novo)
         if (usuarioPrincipal == "admin" && senhaPrincipal == "ad125" )
         {
             cout << "\n\n";
-            menuPrincipal();
+            menuPrincipal(admin, novo);
             break;
         }
         else if(usuarioPrincipal == novo.nome && senhaPrincipal == novo.senha)
         {
             cout << "\n\n";
-            menuPrincipal();
+            menuPrincipal(admin, novo);
             break;
         }
         else
@@ -158,7 +161,7 @@ void entrar(const Usuario& admin, const Usuario& novo)
             if (tentativas == 3)
             {
                 cout << "\n\n";
-                avisoBloqueio();
+                avisoBloqueio(admin, novo);
             }
             else
             {
@@ -168,7 +171,7 @@ void entrar(const Usuario& admin, const Usuario& novo)
     }
 }
 
-void organizando()
+void organizando(const Usuario& admin, const Usuario& novo)
 {
     int i, materiais = 0, opcao = 0;
     string nome;
@@ -176,14 +179,16 @@ void organizando()
     string material[1000];
 
     cout<<"\t\nNome do projeto: ";
-    cin>>nome;
+    cin.ignore();
+    getline(cin, nome);
     cout<<"\t\nQuantos materiais serão usados? ";
     cin>>materiais;
 
     for(i=0;i<materiais;i++)
     {
         cout<<"Material "<<i+1<<": ";
-        cin>>material[i];
+        cin.ignore();
+        getline(cin, material[i]);
         cout<<"Quantidade: ";
         cin>>quantidade[i];
     }
@@ -206,11 +211,11 @@ void organizando()
 
     if(opcao == 1)
     {
-        organizando();
+        organizando(admin, novo);
     }
     else
     {
-        menuPrincipal();
+        menuPrincipal(admin, novo);
     }
 
 }
@@ -218,15 +223,13 @@ void organizando()
 int main()
 {
     Usuario admin;
-    string usuarioPrincipal = {"admin"};
-    string senhaPrincipal = {"ad125"};
+    admin.nome = "admin";
+    admin.senha = "ad125";
 
     string gerente = {"gerente"}, senhaGerente = {"ger3nt3"};
     int escolha = 0;
 
-    setlocale(LC_ALL,"");
-
-    cin.get();
+    //setlocale(LC_ALL,"");
 
     cout<<"\t+---------------------+"<<endl;
     cout<<"\t+ ESCOLHA SEU USUÁRIO +"<<endl;
@@ -236,6 +239,8 @@ int main()
     cout << "\tEscolha: ";
     cin >> escolha;
 
+    Usuario novo;
+    Usuario vazio = {"", ""};
 
     switch(escolha)
     {
@@ -244,8 +249,7 @@ int main()
             break;
         case 2:
         {
-            usuarioNovo = novoUsuario();
-            senhaNova = novaSenha();
+            novo = usuarioNovo();
             cout << "\n\nNovo usuário e senha criados com sucesso!" << endl;
             entrar(admin, novo);
             break;
